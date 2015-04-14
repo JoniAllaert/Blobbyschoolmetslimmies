@@ -115,6 +115,7 @@ public class World {
 //		int[] array = {tiles.get(i).getTileX(), tiles.get(i).getTileY()};
 		return array;
 		//TODO: klopt het dat je hier gewoon de megegeven punten?
+		// Zie facade.
 	}
 	
 	public int[][] getTilePositions(int pixelLeft, int pixelBottom, int pixelRight, int pixelTop)throws IllegalArgumentException{ 
@@ -309,7 +310,7 @@ public class World {
 //				
 //		return null;
 //	} //TODO: hoe adden we voor een algemeen game object aan een specifieke list (aanpasbaarheid).
-	
+	// Ofwel hier 3 methodes van ofwel de lijsten wel 3 maken.
 	public ArrayList<Plant> listPlant(){
 		ArrayList<Plant> list = new ArrayList<Plant>();
 		for(GameObject object: gameObjects)
@@ -402,7 +403,7 @@ public class World {
 	
 	public void startGame(){
 		setGameIsStarted(true);
-		//TODO: moeten we hier dan nog iets doen?
+		//TODO: moeten we hier dan nog iets doen? NEE
 	}
 	
 	private boolean getGameIsStarted() {

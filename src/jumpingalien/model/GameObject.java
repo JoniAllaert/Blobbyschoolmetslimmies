@@ -9,8 +9,8 @@ import be.kuleuven.cs.som.annotate.Basic;
  * @author   Joni Allaert
  */
 
-//TODO: kunnen we een final static variable in game object bewaren en in een subklasse initialiseren.
-//TODO: hoe associeren we de world met gameobject zonder hem mee te geven in constructor.
+//TODO: kunnen we een final static variable in game object bewaren en in een subklasse initialiseren. Kunt ge ni overerven.
+//TODO: hoe associeren we de world met gameobject zonder hem mee te geven in constructor. Waarschijnlijk niet nodig en anders voorbeeld boek.
 public abstract class GameObject {
 	/**
 	 * Initializes a game object with the given position and given sprite and the number of hitpoints.
