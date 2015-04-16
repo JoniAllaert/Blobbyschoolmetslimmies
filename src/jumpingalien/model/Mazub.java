@@ -524,9 +524,9 @@ public class Mazub extends GameObject{
 	}
 
 	/**
-	 * This method calculates the distance travelled vertically based on the given velocity and over a certain time interval.
+	 * This method calculates the distance travelled horizonatlly based on the given velocity and over a certain time interval.
 	 * @param velocity
-	 * 			The current vertical velocity of Mazub
+	 * 			The current horizontal velocity of Mazub
 	 * @param deltaT
 	 * 			The time interval in seconds.
 	 * @return  if the absolute value of the given velocity equals the maximum horizontal velocity,

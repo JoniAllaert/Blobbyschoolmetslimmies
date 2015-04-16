@@ -28,11 +28,11 @@ public class Plant extends GameObject{
 	 * @pre		Plant is not moving.		
 	 * @effect 	Plant starts moving with an initial horizontal velocity to the left (negative).
 	 * 		 	| 
-//	 * @effect	The variable that registers if the plant is moving is set to true.
-//	 * 			| setMove(true)
-//	 * @effect 	The variable that registers the last time the plant started moving to the left is set 
-//	 * 			to the current game time.
-//	 * 			| setTimeStartLeft(this.getTime())
+	 * @effect	The variable that registers if the plant is moving is set to true.
+	 * 			| setMove(true)
+	 * @effect 	The variable that registers the last time the plant started moving to the left is set 
+	 * 			to the current game time.
+	 * 			| setTimeStartLeft(this.getTime())
 	 */
 	@Override
 	public void startMoveLeft() {
@@ -46,17 +46,18 @@ public class Plant extends GameObject{
 	 * @pre		The plant is not moving.
 	 * @effect	The plant starts moving with an initial horizontal velocity to the right (positive).
 	 * 		 	| 
-//	 * @effect	The variable that registers if the plant is moving is set to true.
-//	 * 			| setMove(true)
-//	 * @effect 	The variable that registers the last time the plant started moving to the right is set 
-//	 *			to the current game time.
-//	 * 			| setTimeStartRight(this.getTime())
+	 * @effect	The variable that registers if the plant is moving is set to true.
+	 * 			| setMove(true)
+	 * @effect 	The variable that registers the last time the plant started moving to the right is set 
+	 *			to the current game time.
+	 * 			| setTimeStartRight(this.getTime())
 	 */
 	@Override
 	public void startMoveRight() {
 		this.setHorizontalVelocity(-getInitialHorizontalVelocity());
 		this.setMove(true);
 		this.setTimeLastRight(this.getTime());
+		//TODO: moet het hier niet timeStartRight zijn
 		
 	}
 	/**
@@ -64,15 +65,16 @@ public class Plant extends GameObject{
 	 * @pre		The plant is moving horizontally to the left.
 	 * @effect 	The plant's horizontal velocity equals 0 m/s.
 	 * 			| 
-//	 * @effect	The variable that registers if the plant is moving is set to false.
-//	 * 			| setMove(false)
-//	 * @effect 	The variable that registers the last time the plant moved to the left is set to the current game time.
-//	 * 			| setTimeLastLeft(this.getTime())
+	 * @effect	The variable that registers if the plant is moving is set to false.	 
+	 * 			| setMove(false)
+	 * @effect 	The variable that registers the last time the plant moved to the left is set to the current game time.
+	 * 			| setTimeLastLeft(this.getTime())
 	 */
 	@Override
 	public void endMoveLeft() {
 		this.setHorizontalVelocity(0);
 		this.setMove(false);
+		//TODO: moet hier niet timeLastLeft worden geset.
 
 		
 	}
@@ -82,10 +84,10 @@ public class Plant extends GameObject{
 	 * @pre		The plant is moving horizontally to the right.
 	 * @effect 	The plant's horizontal velocity equals 0 m/s.
 	 * 			| 
-//	 * @effect	The variable that registers if the plant is moving is set to false.
-//	 * 			| setMove(false)
-//	 * @effect 	The variable that registers the last time the plant moved to the right is set to the current game time.
-//	 * 			| setTimeLastRight(this.getTime())
+	 * @effect	The variable that registers if the plant is moving is set to false.
+	 * 			| setMove(false)
+	 * @effect 	The variable that registers the last time the plant moved to the right is set to the current game time.
+	 * 			| setTimeLastRight(this.getTime())
 	 */	
 	@Override
 	public void endMoveRight() {
@@ -95,6 +97,9 @@ public class Plant extends GameObject{
 		
 	}
 	
+	/**
+	 * Gives the initial horizontal velocity of the plant.
+	 */
 	private static double getInitialHorizontalVelocity(){
 		return INITIAL_HORIZONTAL_VELOCITY;
 	}
@@ -104,7 +109,26 @@ public class Plant extends GameObject{
 	 */
 	private static final double INITIAL_HORIZONTAL_VELOCITY = 0.5;
 
-
+	/**
+	 * This method updates the position and velocity of the plant.
+	 * @param horizontalVelocity
+	 * 					The current horizontal velocity of the plant.
+	 * @param verticalVelocity
+	 * 					The current vertical velocity of the plant.
+	 * @param deltaT
+	 * 					The time duration in seconds.
+	 * @effect	The variable time of the class Plant gets updated.
+	 * 			| this.addTime(deltaT)
+	 * @effect	The current sprite of the plant gets updated.
+	 * 			|this.getCurrentSprite()
+	 * @effect 	if the plant is moving horizontally, the position and velocity get updated in the horizontal direction.
+	 * 			|if(this.move == true)
+	 * 			|	setPositionX((int)(this.getPositionX() + distanceTraveledHorizontal(horizontalVelocity, deltaT)))
+	 * 			|	setHorizontalVelocity(advancedHorizontalVelocity(horizontalVelocity,deltaT))
+	 * @throws 	IllegalArgumentException
+	 * 			If the given time does not equal a valid value.
+	 * 			|! isValidTime(deltaT)
+	 */
 	@Override
 	public void advanceTime(double horizontalVelocity, double verticalVelocity,
 			double deltaT) throws IllegalArgumentException{
@@ -127,17 +151,52 @@ public class Plant extends GameObject{
 		
 	}
 	
-
+	/**
+	 * This method calculates the distance traveled horizontally based on the given velocity and over a certain time interval.
+	 * @param velocity
+	 * 			The current horizontal velocity of the plant.
+	 * @param deltaT
+	 * 			The time interval in seconds.
+	 * @return  the result is smaller than the velocity times deltaT times 100. We multiply by 100
+	 * 			because position is in centimeters, but velocity is in meter per second.
+	 * 			| result <= (velocity *deltaT)*100
+	 */
 	@Override
 	protected double distanceTraveledHorizontal(double velocity, double deltaT) {
 		return velocity*deltaT*100;
 	}
 
+	/**
+	 * This method returns the new horizontal velocity after a certain time duration.
+	 * @param velocity
+	 * 			The current horizontal velocity of the plant (the velocity before this method is invoked) in m/s.
+	 * @param deltaT
+	 * 			The time duration in seconds
+	 * @return  The velocity is constant for a plant.
+	 * 			| result == velocity
+	 */
 	@Override
 	protected double advancedHorizontalVelocity(double velocity, double deltaT) {
-		return 0;
+		return velocity;
+		//TODO: ik heb hier velocity van gemaakt omdat die toch constant blijft voor een plant.
 	}
 
+	/**
+	 * Set the horizontal velocity of the plant to a given velocity.
+	 * @param velocity
+	 * 			The new horizontal velocity.
+	 * @effect	If the given velocity is not a valid horizontal velocity and is bigger than zero,
+	 * 			the new velocity is equal to the initial velocity.
+	 * 			| if(!isValidHorizontalVelocity(velocity)&& velocity > 0)
+	 * 			| new.getHorizontalVelocity() = this.getInitialHorizontalVelocity()
+	 * @effect	If the given velocity is not a valid horizontal velocity and is smaller than zero,
+	 * 			the new velocity is equal to minus the initial velocity.
+	 * 			| if(!isValidHorizontalVelocity(velocity)&& velocity > 0)
+	 * 			| new.getHorizontalVelocity() = - this.getInitialHorizontalVelocity()
+	 * @effect	if the given velocity is a valid velocity, then the new velocity is equal to the given velocity.
+	 * 			| if (isValidHorizontalVelocity(velocity))
+	 * 			| new.getHorizontalVelocity() = velocity
+	 */
 	@Override
 	protected void setHorizontalVelocity(double velocity) throws IllegalArgumentException {
 		if(!isValidHorizontalVelocity(velocity)&& velocity > 0)
@@ -147,7 +206,15 @@ public class Plant extends GameObject{
 		else horizontalVelocity =velocity;	
 	}	
 
-	
+	/**
+	 * A method that checks if the current horizontal velocity is equal in absolute value 
+	 * to the initial horizontal velocity of the plant.
+	 * @param 	velocity
+	 * 			The velocity to check.
+	 * @return	True if and only if the absolute value of the velocity is equal to the initial 
+	 * 			horizontal velocity.
+	 * 			|result == (Math.abs(velocity) == this.getInitialHorizontalVelocity())
+	 */
 	@Override
 	public boolean isValidHorizontalVelocity(double velocity) {
 		if(Math.abs(velocity) == getInitialHorizontalVelocity())
@@ -155,12 +222,33 @@ public class Plant extends GameObject{
 		return false;
 	}
 	
-
+	/**
+	 * Set the vertical velocity of the plant to zero.
+	 * @param velocity
+	 * 			The new vertical velocity.
+	 * @post The vertical velocity of the plant will equal zero.
+	 * 		 |(new) getVerticalVelocity() == 0
+	 */
 	@Override
 	protected void setVerticalVelocity(double velocity) {
 		verticalVelocity = 0;
 	}
+	//TODO: wij hebben precies gene getVerticalVelocity()? :p
 
+	/**
+	 * Set the number of hitpoints of the plant to the given number of hitpoints.
+	 * @param hitpoints
+	 * 			The new number of hitpoints.
+	 * @post If the new number of hitpoints is bigger than one, the number of hitpoints of the plant will be set to one.
+	 * 		 |if (hitPoints > 1)
+	 * 		 |(new) getHitpoints() == 1
+	 * @post If the new number of hitpoints is smaller than zero, the number of hitpoints of the plant will be set to zero.
+	 * 		 |if (hitPoints < 0)
+	 * 		 |(new) getHitpoints() == 0
+	 * @post The number of hitpoints of the plant will equal the given number of hitpoints if this number is between zero and one.
+	 * 		 |if(hitpoints >= 0 && hitpoints <= 1)
+	 * 		 |(new) getHitpoints() == hitpoints
+	 */
 	@Override
 	protected void setHitPoints(int hitPoints) {
 		if(hitPoints > 1)

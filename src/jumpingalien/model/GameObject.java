@@ -29,7 +29,7 @@ public abstract class GameObject {
 		setSprites(sprites);
 		setHitPoints(hitpoints);
 	}
-	
+	//TODO: Moet een abstracte methode gedocumenteerd worden, ik zou denken van niet.
 	public abstract void startMoveLeft();
 	public abstract void startMoveRight();
 	public abstract void endMoveLeft();
@@ -44,10 +44,10 @@ public abstract class GameObject {
 	}
 
 	/**
-	 * Sets the boolean that registers if Mazub is moving.
+	 * Sets the boolean that registers if the game object is moving.
 	 * @param flag
 	 * 			The new state.
-	 * @post	The new state variable that registers if Mazub is moving.
+	 * @post	The new state variable that registers if the game object is moving.
 	 * 			| new this.getMove() = flag
 	 */
 	protected void setMove(boolean flag){
@@ -55,10 +55,15 @@ public abstract class GameObject {
 	}
 
 	/**
-	 * Variable registering if Mazub is moving (true) or is not moving (false).
+	 * Variable registering if the game object is moving (true) or is not moving (false).
 	 */
 	private boolean move;
 	
+	/**
+	 * This method returns the current sprite of the game object.
+	 * @post if the game object is moving horizontally, then images_1 is displayed.
+	 * @post if Mazub is not moving, then images_0 is displayed.
+	 */
 	public Sprite getCurrentSprite() {
 		if(this.getHorizontalVelocity() > 0)
 			return this.sprites[1];
@@ -66,10 +71,18 @@ public abstract class GameObject {
 			return this.sprites[0];
 	}
 	
+	/**
+	 * This method gives you the all the possible images of the game object.
+	 */
 	public Sprite[] getSprites() {
 		return sprites.clone();
 	}
 
+	/**
+	 * Set the array of possible sprites of the game object.
+	 * @param 	sprites
+	 * 			The new given sprites of the game object.
+	 */
 	private void setSprites(Sprite[] sprites) {
 		this.sprites = sprites;
 	}
@@ -94,17 +107,16 @@ public abstract class GameObject {
 	public int getHeight() {
 		return this.getCurrentSprite().getHeight() - 2;
 	}
-	
-	
 
 	/**
-	 * Returns the x-coordinate of the position of game object.
+	 * Returns the x-coordinate of the position of the game object.
 	 */
 	@Basic
 	public int getPositionX(){
 		return this.positionX;
 	}
 
+	//TODO: documentatie checken als we het juist ge•mplementeerd hebben.
 	/**
 	 * Set the x-coordinate of the position of game object. 
 	 *
@@ -151,8 +163,6 @@ public abstract class GameObject {
 	 */
 	private int positionX;
 
-	
-
 	/**
 	 * Returns the y-coordinate of the position of the game object.
 	 */
@@ -161,6 +171,7 @@ public abstract class GameObject {
 		return this.positionY;
 	}
 
+	//TODO: documentatie analoog aan X.
 	/**
 	 * Set the y-coordinate of the position of the game object. 
 	 *
@@ -201,9 +212,8 @@ public abstract class GameObject {
 	 */
 	private int positionY;
 	
-
 	/**
-	 * This method gives you the current horizontal velocity of Mazub.
+	 * This method gives you the current horizontal velocity of the game object.
 	 */
 	public double getHorizontalVelocity(){
 		return horizontalVelocity;
@@ -213,10 +223,13 @@ public abstract class GameObject {
 	
 	public abstract boolean isValidHorizontalVelocity(double velocity);
 
+	/**
+	 * Variable registering the horizontal velocity of the game object.
+	 */
 	protected double horizontalVelocity;
 	
 	/**
-	 * This method gives you the current vertical velocity of Mazub.
+	 * This method gives you the current vertical velocity of the game object.
 	 */
 	public double getVerticalVelocity(){
 		return verticalVelocity;
@@ -224,6 +237,9 @@ public abstract class GameObject {
 	
 	protected abstract void setVerticalVelocity(double velocity);
 	
+	/**
+	 * Variable registering the vertical velocity of the game object.
+	 */
 	protected double verticalVelocity;
 	
 //	/**
@@ -292,7 +308,6 @@ public abstract class GameObject {
 		this.time = time;
 	}
 
-
 	/**
 	 * This method adds the given time to the variable this.time
 	 * @param time
@@ -334,10 +349,8 @@ public abstract class GameObject {
 	 */
 	private double timeLastLeft=-2;
 	
-	
-	
 	/**
-	 * This method gives you the time when Mazub last started moving left.
+	 * This method gives you the time when the game object last started moving left.
 	 */
 	@Basic
 	public double getTimeStartLeft(){
@@ -345,10 +358,10 @@ public abstract class GameObject {
 	}
 
 	/**
-	 * Sets the time when Mazub last started moving to the left.
+	 * Sets the time when the game object last started moving to the left.
 	 * @param time
-	 * 			The new time when Mazub last started moving to the left.
-	 * @post	The new time when Mazub last started moving to the left is equal to the given time.
+	 * 			The new time when the game object last started moving to the left.
+	 * @post	The new time when the game object last started moving to the left is equal to the given time.
 	 * 			| new this.getTimeStartLeft = time
 	 */
 	protected void setTimeStartLeft(double time){
@@ -356,7 +369,7 @@ public abstract class GameObject {
 	}
 
 	/**
-	 * Variable registering the time when Mazub starts moving to the left.
+	 * Variable registering the time when the game object starts moving to the left.
 	 */
 	private double timeStartLeft;
 	
@@ -386,7 +399,7 @@ public abstract class GameObject {
 	private double timeLastRight=-2;
 	
 	/**
-	 * This method gives you the time when Mazub last started moving right.
+	 * This method gives you the time when the game object last started moving right.
 	 */
 	@Basic
 	public double getTimeStartRight(){
@@ -394,10 +407,10 @@ public abstract class GameObject {
 	}
 
 	/**
-	 * Sets the time when Mazub last started moving to the right.
+	 * Sets the time when the game object last started moving to the right.
 	 * @param time
-	 * 			The new time when Mazub last started moving to the right.
-	 * @post	The new time when Mazub last started moving to the right is equal to the given time.
+	 * 			The new time when game object last started moving to the right.
+	 * @post	The new time when the game object last started moving to the right is equal to the given time.
 	 * 			| new this.getTimeStartRight = time
 	 */
 	protected void setTimeStartRight(double time){
@@ -405,7 +418,7 @@ public abstract class GameObject {
 	}
 
 	/**
-	 * Variable registering the time when Mazub starts moving to the right. 
+	 * Variable registering the time when the game object starts moving to the right. 
 	 */
 	private double timeStartRight;
 	
@@ -422,12 +435,11 @@ public abstract class GameObject {
 	 * @param 	deltaT
 	 * 			a time duration in seconds.
 	 * @return 	True if deltaT is bigger than zero and smaller than 0.2.
-	 * 			result == ((deltaT >= 0) && (deltaT<= 0.2))
+	 * 			|result == ((deltaT >= 0) && (deltaT<= 0.2))
 	 */
 	public boolean isValidTime(double deltaT){
 		return((deltaT >=0)&&(deltaT <= 0.2));
 	}
-	
 	
 	/**
 	 * Returns the current number of hitpoints that the game object possesses.
@@ -435,6 +447,7 @@ public abstract class GameObject {
 	public int getHitPoints() {
 		return hitPoints;
 	}
+	
 	/**
 	 * Sets the number of hitpoints to the given integer.
 	 * @param hitPoints
@@ -449,11 +462,16 @@ public abstract class GameObject {
 		
 	/**
 	 * This method changes the status of the game object to terminated.
+	 * @post the variable dead will be equal to true.
+	 * 		 | dead == true
 	 */
 	protected void terminates(){
 		this.dead = true;
 	}
 		
+	/**
+	 * This method returns true if the game object is dead, otherwise it returns false.
+	 */
 	public boolean isTerminated(){
 		return dead;
 	}
