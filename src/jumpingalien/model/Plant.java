@@ -191,7 +191,7 @@ public class Plant extends GameObject{
 	 * 			| new.getHorizontalVelocity() = this.getInitialHorizontalVelocity()
 	 * @effect	If the given velocity is not a valid horizontal velocity and is smaller than zero,
 	 * 			the new velocity is equal to minus the initial velocity.
-	 * 			| if(!isValidHorizontalVelocity(velocity)&& velocity > 0)
+	 * 			| if(!isValidHorizontalVelocity(velocity)&& velocity < 0)
 	 * 			| new.getHorizontalVelocity() = - this.getInitialHorizontalVelocity()
 	 * @effect	if the given velocity is a valid velocity, then the new velocity is equal to the given velocity.
 	 * 			| if (isValidHorizontalVelocity(velocity))
