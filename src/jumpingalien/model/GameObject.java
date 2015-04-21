@@ -29,14 +29,13 @@ public abstract class GameObject {
 		setSprites(sprites);
 		setHitPoints(hitpoints);
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * moeten worden gedocumenteerd, basic dingen die het moet uitvoeren, zie voorbeeld session 8.
 	 */
-=======
+
 	//TODO: Moet een abstracte methode gedocumenteerd worden, ik zou denken van niet.
->>>>>>> origin/master
+
 	public abstract void startMoveLeft();
 	public abstract void startMoveRight();
 	public abstract void endMoveLeft();

@@ -11,17 +11,14 @@ public class School{
 	 */
 	public School(){
 	}
-	
-<<<<<<< HEAD
+
 	public ArrayList<Slime> getSlimes() {
 		return slimes;
 	}
-	
-=======
+
 	/**
 	 * This lists registers the slimes in the school.
 	 */
->>>>>>> origin/master
 	private ArrayList<Slime> slimes = new ArrayList<Slime>();
 	
 	/**
