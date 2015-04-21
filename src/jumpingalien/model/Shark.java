@@ -391,7 +391,7 @@ public class Shark extends GameObject{
 
 
 	@Override
-	public void doCollisionTile(Tile tile) {
+	public void doCollisionTile(Tile tile, int i, int j) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -151,11 +151,8 @@ public class World {
 	public int[] getBottomLeftPixelOfTile(int tileX, int tileY){
 		int[] array = {tileX*getTileSize(), tileY*getTileSize()};
 		return array;
-<<<<<<< HEAD
-=======
 		//TODO: klopt het dat je hier gewoon de megegeven punten?
 		// Zie facade.
->>>>>>> origin/master
 	}
 
 
@@ -242,7 +239,8 @@ public class World {
 	}
 
 	private void setVisibleWindowHeight(int visibleWindowHeight) throws IllegalArgumentException{
-	if((visibleWindowHeight < (400 + this.mazub.getHeight())) || visibleWindowHeight > getyMax())
+	if((visibleWindowHeight < (400 // + this.mazub.getHeight()
+			)) || visibleWindowHeight > getyMax())
 		throw new IllegalArgumentException(); //TODO er is iets fout met onze height en widht.
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
@@ -359,9 +357,6 @@ public class World {
 	public ArrayList<GameObject> getGameObjects() {
 		return (ArrayList<GameObject>) gameObjects.clone();
 	}
-
-<<<<<<< HEAD
-=======
 //	public ArrayList<?> listOf(Class<?> Klasse){
 //		ArrayList<Klasse> list = new ArrayList<Klasse>();
 //		for(GameObject object: gameObjects)
@@ -371,7 +366,6 @@ public class World {
 //		return null;
 //	} //TODO: hoe adden we voor een algemeen game object aan een specifieke list (aanpasbaarheid).
 	// Ofwel hier 3 methodes van ofwel de lijsten wel 3 maken.
->>>>>>> origin/master
 	public ArrayList<Plant> listPlant(){
 		ArrayList<Plant> list = new ArrayList<Plant>();
 		for(GameObject object: gameObjects)
@@ -554,11 +548,7 @@ public class World {
 
 	public void startGame(){
 		setGameIsStarted(true);
-<<<<<<< HEAD
-		//TODO: moeten we hier dan nog iets doen? 
-=======
 		//TODO: moeten we hier dan nog iets doen? NEE
->>>>>>> origin/master
 	}
 
 	private boolean getGameIsStarted() {

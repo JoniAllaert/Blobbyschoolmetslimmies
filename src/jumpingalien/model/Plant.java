@@ -263,8 +263,9 @@ public class Plant extends GameObject{
 	public void doCollision(GameObject object) {
 	}
 
+
 	@Override
-	public void doCollisionTile(Tile tile) {
+	public void doCollisionTile(Tile tile, int i, int j) {
 		// TODO Auto-generated method stub
 		
 	}
