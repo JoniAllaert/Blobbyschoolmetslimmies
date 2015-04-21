@@ -389,6 +389,7 @@ public class Facade implements jumpingalien.part2.facade.IFacadePart2 {
 	 * @return An array which contains the x-coordinate and y-coordinate of the
 	 *         bottom left pixel of the given tile, in that order.
 	 */
+	// In pixel teruggeven dus maal tilesize.
 	public int[] getBottomLeftPixelOfTile(World world, int tileX, int tileY){
 		return world.getBottomLeftPixelOfTile(tileX, tileY);
 	}
@@ -416,6 +417,7 @@ public class Facade implements jumpingalien.part2.facade.IFacadePart2 {
 	 *         small to large x_T) precede the positions of the row above that.
 	 * 
 	 */
+	// hier gedeeld door tilesize want de tile coordinaten.
 	public int[][] getTilePositionsIn(World world, int pixelLeft, int pixelBottom,
 			int pixelRight, int pixelTop){ 
 			return world.getTilePositions(pixelLeft, pixelBottom, pixelRight, pixelTop);

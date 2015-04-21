@@ -8,7 +8,6 @@ import jumpingalien.model.World;
  *
  */
 public class Tile {
-	// feature is dit ook in ons deel een int? JA.
 	/**
 	 * 
 	 * @param tileX
