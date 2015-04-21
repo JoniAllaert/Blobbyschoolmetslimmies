@@ -21,6 +21,7 @@ public class Plant extends GameObject{
 	 */
 	public Plant(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
 		super(pixelLeftX, pixelBottomY, sprites, 1);
+		startMoveLeft();
 	}
 
 	/**
@@ -38,7 +39,7 @@ public class Plant extends GameObject{
 	public void startMoveLeft() {
 		this.setHorizontalVelocity(getInitialHorizontalVelocity());
 		this.setMove(true);
-		this.setTimeLastLeft(this.getTime());		
+		this.setTimeStartLeft(this.getTime());		
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class Plant extends GameObject{
 	public void startMoveRight() {
 		this.setHorizontalVelocity(-getInitialHorizontalVelocity());
 		this.setMove(true);
-		this.setTimeLastRight(this.getTime());
+		this.setTimeStartRight(this.getTime());
 		//TODO: moet het hier niet timeStartRight zijn
 		
 	}
@@ -136,15 +137,16 @@ public class Plant extends GameObject{
 			throw new IllegalArgumentException();
 		this.addTime(deltaT);
 		this.getCurrentSprite();
-		if(this.getMove() == true)
+		if(this.getMove() == true){
 			setPositionX((int) (this.getPositionX() + distanceTraveledHorizontal(this.getHorizontalVelocity(), deltaT)));
-		if((this.getTimeLastLeft() + 0.5 >= this.getTime())&&(this.getTimeLastRight() + 0.5 <= this.getTime())){
-			endMoveLeft();
-			startMoveRight();
-		}
-		else {
-			endMoveRight();
-			startMoveLeft();
+			if((this.getTimeStartLeft() + 0.5 >= this.getTime())&&(this.getTimeStartRight() + 0.5 <= this.getTime())){
+				endMoveLeft();
+				startMoveRight();
+			}
+			else if((this.getTimeStartLeft() + 0.5 <= this.getTime())&&(this.getTimeStartRight() + 0.5 >= this.getTime())){
+				endMoveRight();
+				startMoveLeft();
+			}
 		}
 		
 		//TODO: hoe controlleren we dat het precies om de 0.5 seconden wisselt? is waarschijnlijk goed. moet zo snel mogelijk gebeuren na 0.5 seconden.

@@ -25,6 +25,7 @@ public class Shark extends GameObject{
 	 */
 	public Shark(int pixelLeftX, int pixelBottomY, Sprite[] sprites) {
 		super(pixelLeftX, pixelBottomY, sprites, 100);
+		startMoveLeft();
 	}
 	
 	/**
@@ -41,8 +42,11 @@ public class Shark extends GameObject{
 	@Override
 	public void startMoveLeft() {
 		this.setMove(true);
-		this.setTimeStartLeft(this.getTime());		
+		this.setTimeStartLeft(this.getTime());
+		this.setMovementPeriods(this.getMovementPeriods() +1);
 	}
+
+	
 
 	/**
 	 * The shark starts moving horizontally to the right.
@@ -59,6 +63,7 @@ public class Shark extends GameObject{
 	public void startMoveRight() {
 		this.setMove(true);
 		this.setTimeStartRight(this.getTime());
+		this.setMovementPeriods(this.getMovementPeriods() +1);
 	}
 
 	/**
@@ -92,6 +97,16 @@ public class Shark extends GameObject{
 		this.setHorizontalVelocity(0);
 		this.setMove(false);
 	}
+	
+	public int getMovementPeriods() {
+		return movementPeriods;
+	}
+
+	public void setMovementPeriods(int movementPeriods) {
+		this.movementPeriods = movementPeriods;
+	}
+	
+	private int movementPeriods;
 
 	/**
 	 * Set the horizontal velocity of the shark to a given velocity.
@@ -173,8 +188,15 @@ public class Shark extends GameObject{
 	public void startJump()throws IllegalStateException{
 		if(!this.getMove())
 			throw new IllegalStateException();
-		setVerticalVelocity(this.getInitialVerticalVelocity());
-		setJump(true);
+		else{
+			if(this.getMovementPeriods() < 4)
+				setVerticalAccaleration(((Math.random())*0.4) -0.2);
+			else{
+				setVerticalVelocity(this.getInitialVerticalVelocity());
+				setJump(true);
+				setMovementPeriods(0);
+			}
+		}
 	}
 
 	/**
@@ -308,8 +330,37 @@ public class Shark extends GameObject{
 
 	//TODO: documentatie na implementatie.
 	@Override
-	public void advanceTime(double horizontalVelocity, double verticalVelocity, double deltaT){
-		
+	public void advanceTime(double horizontalVelocity, double verticalVelocity,
+			double deltaT)throws IllegalArgumentException{
+			if (! isValidTime(deltaT))
+				throw new IllegalArgumentException();
+			this.addTime(deltaT);
+			this.getCurrentSprite();
+			if(this.getMove() == true){
+				this.setPositionX((int) (this.getPositionX() + distanceTraveledHorizontal(horizontalVelocity, deltaT)));
+				this.setHorizontalVelocity(advancedHorizontalVelocity(horizontalVelocity, deltaT));
+				this.setPositionY((int) (this.getPositionY() + distanceTraveledVertical(verticalVelocity, deltaT)));
+				this.setVerticalVelocity(advancedVerticalVelocity(verticalVelocity, deltaT));
+				if((this.getTimeLastLeft() + 1 <= this.getTime())&&(this.getTimeLastLeft() + 4 >= this.getTime())){
+					endMoveLeft();
+					if(this.getJump() == true){
+						endJump();
+					 	startMoveRight();
+					}
+					else startMoveRight();
+				}
+				else if((this.getTimeLastRight() + 1 <= this.getTime())&&(this.getTimeLastRight() + 4 >= this.getTime())){
+					endMoveRight();
+					if(this.getJump() == true){
+						endJump();
+					 	startMoveLeft();
+					}
+					else startMoveLeft();
+				}
+				else return;
+				if(Math.random() < 0.5)
+					startJump();
+			}
 	}
 	
 	@Override
@@ -392,10 +443,91 @@ public class Shark extends GameObject{
 
 	@Override
 	public void doCollisionTile(Tile tile, int i, int j) {
-		// TODO Auto-generated method stub
+		if(tile.getGeologicalFeature() == 1){
+			setInAir(false);
+			setInMagma(false);
+			if(i == 0){
+				this.setHorizontalVelocity(0);
+				this.setMove(false);
+				this.setTimeLastLeft(this.getTime());
+			}
+			else if(i==1){
+				this.setHorizontalVelocity(0);
+				this.setMove(false);
+				this.setTimeLastRight(this.getTime());
+			}
+			else if(i==3){
+				this.setVerticalVelocity(0);
+			}
+			else {
+				this.setVerticalVelocity(0);
+				this.setJump(false);
+			}
+		}
+		else if(tile.getGeologicalFeature() == 0 ){
+			setInMagma(false);
+			if(this.isInAir() == true && (this.getTime() - this.getTimeStartAir() ) > 0.2 ){
+				setHitPoints(this.getHitPoints() - (int) ((this.getTime() - this.getTimeStartAir() )*30)); //TODO: nu gaan er te veel af waarschijnlijk.
+				setTimeStartAir(this.getTime());
+			}
+			else if(this.isInAir() ==false){
+				this.setInAir(true);
+				this.setTimeStartAir(this.getTime());
+			}
+		}
+		else if(tile.getGeologicalFeature() == 3){
+			setInAir(false);
+			if(this.isInMagma() == true && (this.getTime() - this.getTimeStartMagma() ) > 0.2){
+				setHitPoints(this.getHitPoints() - (int) ((this.getTime() - this.getTimeStartMagma() )*250)); //TODO: nu gaan er te veel af waarschijnlijk.
+			}
+			else if(this.isInMagma() == false){
+				this.setInMagma(true);
+				this.setTimeStartMagma(this.getTime());
+			}			
+		}
+		else{
+			setInAir(false);
+			setInMagma(false);
+		}
 		
 	}
 	
+	private boolean isInAir;
+	public boolean isInAir() {
+		return isInAir;
+	}
+
+	public void setInAir(boolean isInAir) {
+		this.isInAir = isInAir;
+	}
+
+	public double getTimeStartAir() {
+		return timeStartAir;
+	}
+
+	public void setTimeStartAir(double timeStartAir) {
+		this.timeStartAir = timeStartAir;
+	}
+
+	public boolean isInMagma() {
+		return isInMagma;
+	}
+
+	public void setInMagma(boolean isInMagma) {
+		this.isInMagma = isInMagma;
+	}
+
+	public double getTimeStartMagma() {
+		return timeStartMagma;
+	}
+
+	public void setTimeStartMagma(double timeStartMagma) {
+		this.timeStartMagma = timeStartMagma;
+	}
+
+	private double timeStartAir;
+	private boolean isInMagma;
+	private double timeStartMagma;
 	
 
 	

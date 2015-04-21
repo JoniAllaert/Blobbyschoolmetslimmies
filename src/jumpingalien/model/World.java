@@ -2,13 +2,9 @@ package jumpingalien.model;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import jumpingalien.model.Tile;
 import jumpingalien.model.GameObject;
-import jumpingalien.util.ModelException;
 
-//TODO: checken of we de arraylist kunnen behouden of dat we misschien een HashSet moeten gebruiken.
 
 public class World {
 	public World (int tileSize, int nbTilesX, int nbTilesY,int visibleWindowWidth, int visibleWindowHeight, 
@@ -151,8 +147,6 @@ public class World {
 	public int[] getBottomLeftPixelOfTile(int tileX, int tileY){
 		int[] array = {tileX*getTileSize(), tileY*getTileSize()};
 		return array;
-		//TODO: klopt het dat je hier gewoon de megegeven punten?
-		// Zie facade.
 	}
 
 
@@ -239,9 +233,12 @@ public class World {
 	}
 
 	private void setVisibleWindowHeight(int visibleWindowHeight) throws IllegalArgumentException{
-	if((visibleWindowHeight < (400 // + this.mazub.getHeight()
-			)) || visibleWindowHeight > getyMax())
-		throw new IllegalArgumentException(); //TODO er is iets fout met onze height en widht.
+	//	System.out.println(mazub.getHeight());
+		if((visibleWindowHeight < (400 
+				//+ this.mazub.getHeight()
+				)) || visibleWindowHeight > getyMax())
+		throw new IllegalArgumentException(); 
+	//TODO er is iets fout met onze height en widht.
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
 
@@ -391,31 +388,35 @@ public class World {
 	}
 
 	public void addGameObject(GameObject object)throws IllegalStateException{
-		Tile tileObject = tiles.get(findTileForPixel(object.getPositionX(), object.getPositionY()));
-		try{
-			if(!isPassableTerrain(tileObject))
-				throw new IllegalStateException();
-		}
-		catch(IllegalStateException ext){
-			if((tileObject.getTileX()+tileObject.getLength()-1 )== object.getPositionY()){
-				if(gameObjects.size()>= 100)
-					throw ext;
-				else if(this.getGameIsStarted())
-					throw ext;
-				else{ 
-					gameObjects.add(object);
-					if(object instanceof Slime)
-						addSchool(((Slime) object).getSchool());
-				}
-			}
-			else throw ext;
-		}
-		if(gameObjects.size() >= 100)
-			return;
-		else{ 
-			gameObjects.add(object);
-			if(object instanceof Slime)
-				addSchool(((Slime) object).getSchool());
+//		Tile tileObject = tiles.get(findTileForPixel(object.getPositionX(), object.getPositionY()));
+//		try{
+//			if(!isPassableTerrain(tileObject))
+//				throw new IllegalStateException();
+//		}
+//		catch(IllegalStateException ext){
+//			if((tileObject.getTileX()+tileObject.getLength()-1 )== object.getPositionY()){
+//				if(gameObjects.size()>= 100)
+//					throw ext;
+//				else if(this.getGameIsStarted())
+//					throw ext;
+//				else{ 
+//					gameObjects.add(object);
+//					if(object instanceof Slime)
+//						addSchool(((Slime) object).getSchool());
+//				}
+//			}
+//			else throw ext;
+//		}
+//		if(gameObjects.size() >= 100)
+//			return;
+//		else{ 
+//			gameObjects.add(object);
+//			if(object instanceof Slime)
+//				addSchool(((Slime) object).getSchool());
+//		}
+		gameObjects.add(object);
+		for(GameObject object1: gameObjects){
+			System.out.println(object1);
 		}
 
 	}
@@ -451,9 +452,9 @@ public class World {
 	 * @param deltaT
 	 */
 	public void advanceTime(double deltaT){
-		advanceTime(this.mazub, 0.01/(Math.abs(this.mazub.getHorizontalVelocity())+Math.abs(this.mazub.getHorizontalAccelaration()*deltaT)));
+		advanceTime(this.mazub, Math.min(deltaT, 0.01/(Math.abs(this.mazub.getHorizontalVelocity())+Math.abs(this.mazub.getHorizontalAccelaration()*deltaT))));
 		for(GameObject object : gameObjects){
-			advanceTime(object, 0.01/(Math.abs(object.getHorizontalVelocity())));
+			advanceTime(object, Math.min(deltaT, 0.01/(Math.abs(object.getHorizontalVelocity()))));
 		}
 	}
 
@@ -477,7 +478,6 @@ public class World {
 	 * @return
 	 */
 	public void collisionTile(){
-		for(Tile tile: tiles){
 			for(int j = this.mazub.getPositionY(); j <= this.mazub.getPositionY() + this.mazub.getHeight() ; j++){
 				this.mazub.doCollisionTile(tiles.get(findTileForPixel(this.mazub.getPositionX(),j)), 0 , j);
 				this.mazub.doCollisionTile(tiles.get(findTileForPixel(this.mazub.getPositionX()+ this.mazub.getWidth(), j)),1, j);
@@ -492,8 +492,6 @@ public class World {
 					//			Rectangle m = new Rectangle(this.mazub.getPositionX(), this.mazub.getPositionY(), this.mazub.getWidth(), this.mazub.getHeight());
 					//			if(t.intersects(m))
 				}
-			}
-		for(Tile tile: tiles){
 			for(GameObject object: gameObjects){
 				for(int j = object.getPositionY(); j <= object.getPositionY() + object.getHeight() ; j++){
 					object.doCollisionTile(tiles.get(findTileForPixel(object.getPositionX(),j)), 0, j);
@@ -511,7 +509,6 @@ public class World {
 						//					object.doCollisionTile(tile);
 					}	
 				}
-			}
 		}
 
 

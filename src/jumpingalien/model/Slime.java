@@ -25,6 +25,7 @@ public class Slime extends GameObject{
 		super(pixelLeftX, pixelBottomY, sprites, 100);
 		setSchool(school);
 		school.addSlime(this);
+		startMoveLeft();
 	}
 
 	@Override
@@ -116,16 +117,16 @@ public class Slime extends GameObject{
 		if(this.getMove() == true){
 			this.setPositionX((int) (this.getPositionX() + distanceTraveledHorizontal(horizontalVelocity, deltaT)));
 			this.setHorizontalVelocity(advancedHorizontalVelocity(horizontalVelocity, deltaT));
+			if((this.getTimeLastLeft() + 2 <= this.getTime())&&(this.getTimeLastLeft() + 6 >= this.getTime())){
+				endMoveLeft();
+				startMoveRight();
+			}
+			else if((this.getTimeLastRight() + 2 <= this.getTime())&&(this.getTimeLastRight() + 6 >= this.getTime())){
+				endMoveRight();
+				startMoveLeft();
+			}
+			else return;
 		}
-		if((this.getTimeLastLeft() + 2 <= this.getTime())&&(this.getTimeLastLeft() + 6 >= this.getTime())){
-			endMoveLeft();
-			startMoveRight();
-		}
-		else if((this.getTimeLastRight() + 2 <= this.getTime())&&(this.getTimeLastRight() + 6 >= this.getTime())){
-			endMoveRight();
-			startMoveLeft();
-		}
-		else return;
 		
 		//TODO: zie zelfde als Plant.
 	}

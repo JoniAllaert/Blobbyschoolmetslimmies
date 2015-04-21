@@ -627,12 +627,15 @@ public class Mazub extends GameObject{
 		else{
 			this.setHitPoints(this.getHitPoints() - 50);
 			object.setHitPoints(object.getHitPoints() - 50);
+			
 		}
 	}
 
 	@Override
 	public void doCollisionTile(Tile tile, int i, int j) {
 		if(tile.getGeologicalFeature() == 1){
+			setInWater(false);
+			setInMagma(false);
 			if(i == 0){
 				this.setHorizontalVelocity(0);
 				this.setMove(false);
@@ -654,13 +657,71 @@ public class Mazub extends GameObject{
 			}
 		}
 		else if(tile.getGeologicalFeature() == 2 ){
-				
+			setInMagma(false);
+			if(this.isInWater() == true){
+				setHitPoints(this.getHitPoints() - (int) ((this.getTime() - this.getTimeStartWater() )*10)); //TODO: nu gaan er te veel af waarschijnlijk.
+			}
+			else{
+				this.setInWater(true);
+				this.setTimeStartWater(this.getTime());
+			}
 		}
 		else if(tile.getGeologicalFeature() == 3){
-			
+			setInWater(false);
+			if(this.isInMagma() == true){
+				setHitPoints(this.getHitPoints() - (int) ((this.getTime() - this.getTimeStartMagma() )*250)); //TODO: nu gaan er te veel af waarschijnlijk.
+			}
+			else{
+				this.setInMagma(true);
+				this.setTimeStartMagma(this.getTime());
+			}			
+		}
+		else{
+			setInWater(false);
+			setInMagma(false);
 		}
 			
 		
 	}
+	
+	private boolean isInWater;
+	
+	public boolean isInWater() {
+		return isInWater;
+	}
+
+	public void setInWater(boolean isInWater) {
+		this.isInWater = isInWater;
+	}
+
+	public double getTimeStartWater() {
+		return timeStartWater;
+	}
+
+	public void setTimeStartWater(double timeStartWater) {
+		this.timeStartWater = timeStartWater;
+	}
+
+	private double timeStartWater;
+	
+	private boolean isInMagma;
+	
+	public boolean isInMagma() {
+		return isInMagma;
+	}
+
+	public void setInMagma(boolean isInMagma) {
+		this.isInMagma = isInMagma;
+	}
+
+	public double getTimeStartMagma() {
+		return timeStartMagma;
+	}
+
+	public void setTimeStartMagma(double timeStartMagma) {
+		this.timeStartMagma = timeStartMagma;
+	}
+
+	private double timeStartMagma;
 
 }

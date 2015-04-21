@@ -11,7 +11,7 @@ import be.kuleuven.cs.som.annotate.Basic;
 
 //TODO: kunnen we een final static variable in game object bewaren en in een subklasse initialiseren. Kunt ge ni overerven.
 //TODO: hoe associeren we de world met gameobject zonder hem mee te geven in constructor. Waarschijnlijk niet nodig en anders voorbeeld boek.
-public abstract class GameObject {
+public class GameObject {
 	/**
 	 * Initializes a game object with the given position and given sprite and the number of hitpoints.
 	 * @param pixelLeftX
@@ -35,11 +35,24 @@ public abstract class GameObject {
 	 */
 
 	//TODO: Moet een abstracte methode gedocumenteerd worden, ik zou denken van niet.
-
-	public abstract void startMoveLeft();
-	public abstract void startMoveRight();
-	public abstract void endMoveLeft();
-	public abstract void endMoveRight();
+//
+//	public abstract void startMoveLeft();
+//	public abstract void startMoveRight();
+//	public abstract void endMoveLeft();
+//	public abstract void endMoveRight();
+	
+	public void startMoveLeft(){
+		
+	}
+	public void startMoveRight(){
+		
+	}
+	public void endMoveLeft(){
+		
+	}
+	public void endMoveRight(){
+		
+	}
 	
 
 	/**
@@ -225,9 +238,17 @@ public abstract class GameObject {
 		return horizontalVelocity;
 	}
 	
-	protected abstract void setHorizontalVelocity(double velocity);
+//	protected abstract void setHorizontalVelocity(double velocity);
+//	
+//	public abstract boolean isValidHorizontalVelocity(double velocity);
 	
-	public abstract boolean isValidHorizontalVelocity(double velocity);
+protected void setHorizontalVelocity(double velocity){
+	
+}
+	
+	public boolean isValidHorizontalVelocity(double velocity){
+		return true;
+	}
 
 	/**
 	 * Variable registering the horizontal velocity of the game object.
@@ -241,7 +262,11 @@ public abstract class GameObject {
 		return verticalVelocity;
 	}
 	
-	protected abstract void setVerticalVelocity(double velocity);
+//	protected abstract void setVerticalVelocity(double velocity);
+	protected void setVerticalVelocity(double velocity){
+		
+	}
+
 	
 	/**
 	 * Variable registering the vertical velocity of the game object.
@@ -427,13 +452,26 @@ public abstract class GameObject {
 	 * Variable registering the time when the game object starts moving to the right. 
 	 */
 	private double timeStartRight;
+//	
+//	
+//	public abstract void advanceTime(double horizontalVelocity, double verticalVelocity, double deltaT);
+//	
+//	protected abstract double distanceTraveledHorizontal(double velocity, double deltaT);
+//	
+//	protected abstract double advancedHorizontalVelocity(double velocity, double deltaT);
+
 	
+	public void advanceTime(double horizontalVelocity, double verticalVelocity, double deltaT){
+		
+	}
 	
-	public abstract void advanceTime(double horizontalVelocity, double verticalVelocity, double deltaT);
+	protected double distanceTraveledHorizontal(double velocity, double deltaT){
+		return 0;
+	}
 	
-	protected abstract double distanceTraveledHorizontal(double velocity, double deltaT);
-	
-	protected abstract double advancedHorizontalVelocity(double velocity, double deltaT);
+	protected double advancedHorizontalVelocity(double velocity, double deltaT){
+		return 0;
+	}
 
 
 	/**
@@ -459,7 +497,11 @@ public abstract class GameObject {
 	 * @param hitPoints
 	 * 		  The new number of hitpoints the game object possesses.
 	 */
-	protected abstract void setHitPoints(int hitPoints);
+//	protected abstract void setHitPoints(int hitPoints);
+	protected void setHitPoints(int hitPoints){
+		
+	}
+
 	
 	/**
 	 * Variable registering the number of hitpoints of the game object.
@@ -487,6 +529,12 @@ public abstract class GameObject {
 	 */
 	private boolean dead;
 	
-	public abstract void doCollision(GameObject object);
-	public abstract void doCollisionTile(Tile tile, int i,int j);
+//	public abstract void doCollision(GameObject object);
+//	public abstract void doCollisionTile(Tile tile, int i,int j);
+	public  void doCollision(GameObject object){
+		
+	}
+	public void doCollisionTile(Tile tile, int i,int j){
+		
+	}
 }
