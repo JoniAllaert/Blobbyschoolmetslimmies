@@ -609,11 +609,58 @@ public class Mazub extends GameObject{
 
 	@Override
 	protected void setHitPoints(int hitPoints) {
-		if(hitPoints < 0)
-			this.hitPoints=0;
+		if(hitPoints <= 0)
+			this.terminates();
 		if(hitPoints > 500)
 			this.hitPoints =500;
 		else this.hitPoints=hitPoints;
+	}
+
+	@Override
+	public void doCollision(GameObject object) {
+		if(object instanceof Plant)
+			if(this.getHitPoints() < 500){
+				object.terminates();
+				this.setHitPoints(this.getHitPoints() + 50);
+			}
+			else;
+		else{
+			this.setHitPoints(this.getHitPoints() - 50);
+			object.setHitPoints(object.getHitPoints() - 50);
+		}
+	}
+
+	@Override
+	public void doCollisionTile(Tile tile, int i, int j) {
+		if(tile.getGeologicalFeature() == 1){
+			if(i == 0){
+				this.setHorizontalVelocity(0);
+				this.setMove(false);
+				this.setTimeLastLeft(this.getTime());
+			}
+			else if(i==1){
+				this.setHorizontalVelocity(0);
+				this.setMove(false);
+				this.setTimeLastRight(this.getTime());
+			}
+			else if(i==3){
+				this.setVerticalVelocity(0);
+					if(this.getJump()==false && this.getDuck() == false)
+						setDuck(true);
+			}
+			else {
+				this.setVerticalVelocity(0);
+				this.setJump(false);
+			}
+		}
+		else if(tile.getGeologicalFeature() == 2 ){
+				
+		}
+		else if(tile.getGeologicalFeature() == 3){
+			
+		}
+			
+		
 	}
 
 }

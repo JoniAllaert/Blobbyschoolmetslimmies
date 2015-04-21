@@ -123,7 +123,7 @@ public class Plant extends GameObject{
 			startMoveLeft();
 		}
 		
-		//TODO: hoe controlleren we dat het precies om de 0.5 seconden wisselt?
+		//TODO: hoe controlleren we dat het precies om de 0.5 seconden wisselt? is waarschijnlijk goed. moet zo snel mogelijk gebeuren na 0.5 seconden.
 		
 	}
 	
@@ -169,6 +169,16 @@ public class Plant extends GameObject{
 			this.hitPoints = 0;
 		else
 			this.hitPoints = hitPoints;
+	}
+
+	@Override
+	public void doCollision(GameObject object) {
+	}
+
+	@Override
+	public void doCollisionTile(Tile tile) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

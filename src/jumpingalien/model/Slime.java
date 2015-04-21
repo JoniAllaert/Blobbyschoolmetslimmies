@@ -165,4 +165,47 @@ public class Slime extends GameObject{
 	}
 	
 	private School school;
+
+	@Override
+	public void doCollision(GameObject object) {
+		if(object instanceof Slime){
+			if(((Slime) object).getSchool() != this.getSchool()){
+				if(((Slime) object).getSchool().getSlimes().size() > this.getSchool().getSlimes().size()){
+					for(Slime slim: this.getSchool().getSlimes()){
+						if(slim != this)
+							slim.setHitPoints(slim.getHitPoints() +1);
+						else slim.setHitPoints(slim.getHitPoints() - (this.getSchool().getSlimes().size()-1));
+					}
+					((Slime) object).getSchool().addSlime(this);
+					this.getSchool().removeSlime(this);
+					
+				}
+				else if(((Slime) object).getSchool().getSlimes().size() < this.getSchool().getSlimes().size()){
+					for(Slime slim: ((Slime) object).getSchool().getSlimes()){
+						if(slim != object)
+							slim.setHitPoints(slim.getHitPoints() +1);
+						else slim.setHitPoints(slim.getHitPoints() - (((Slime) object).getSchool().getSlimes().size()-1));
+					}
+					this.getSchool().addSlime((Slime) object);
+					((Slime) object).getSchool().removeSlime((Slime) object);
+				}
+			}
+		}
+		else if(object instanceof Shark){
+			this.setHitPoints(this.getHitPoints() - 50);
+			for(Slime slime:this.getSchool().getSlimes()){
+				if(slime != this){
+					slime.setHitPoints(slime.getHitPoints() - 1);
+				}
+			}
+			
+		}
+		
+	}
+
+	@Override
+	public void doCollisionTile(Tile tile) {
+		// TODO Auto-generated method stub
+		
+	}
 }

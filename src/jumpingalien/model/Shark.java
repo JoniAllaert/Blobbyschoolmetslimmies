@@ -261,6 +261,21 @@ public class Shark extends GameObject{
 		else
 			this.hitPoints = hitPoints;		
 	}
+
+
+	@Override
+	public void doCollision(GameObject object) {
+		if(object instanceof Slime){
+			this.setHitPoints(this.getHitPoints() - 50);		
+		}
+	}
+
+
+	@Override
+	public void doCollisionTile(Tile tile) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

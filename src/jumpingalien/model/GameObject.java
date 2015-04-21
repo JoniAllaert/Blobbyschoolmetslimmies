@@ -30,6 +30,9 @@ public abstract class GameObject {
 		setHitPoints(hitpoints);
 	}
 	
+	/**
+	 * moeten worden gedocumenteerd, basic dingen die het moet uitvoeren, zie voorbeeld session 8.
+	 */
 	public abstract void startMoveLeft();
 	public abstract void startMoveRight();
 	public abstract void endMoveLeft();
@@ -463,4 +466,6 @@ public abstract class GameObject {
 	 */
 	private boolean dead;
 	
+	public abstract void doCollision(GameObject object);
+	public abstract void doCollisionTile(Tile tile, int i,int j);
 }
