@@ -7,6 +7,7 @@ import jumpingalien.model.GameObject;
 
 
 public class World {
+	
 	public World (int tileSize, int nbTilesX, int nbTilesY,int visibleWindowWidth, int visibleWindowHeight, 
 			int targetTileX, int targetTileY){
 		for (int i = 0; i<= nbTilesY-1 ; i++){
@@ -234,9 +235,7 @@ public class World {
 
 	private void setVisibleWindowHeight(int visibleWindowHeight) throws IllegalArgumentException{
 	//	System.out.println(mazub.getHeight());
-		if((visibleWindowHeight < (400 
-				//+ this.mazub.getHeight()
-				)) || visibleWindowHeight > getyMax())
+		if((visibleWindowHeight < (400 + mazub.getHeight())) || visibleWindowHeight > getyMax())
 		throw new IllegalArgumentException(); 
 	//TODO er is iets fout met onze height en widht.
 		this.visibleWindowHeight = visibleWindowHeight;
@@ -387,6 +386,7 @@ public class World {
 		return list;
 	}
 
+	
 	public void addGameObject(GameObject object)throws IllegalStateException{
 //		Tile tileObject = tiles.get(findTileForPixel(object.getPositionX(), object.getPositionY()));
 //		try{
@@ -417,7 +417,7 @@ public class World {
 		gameObjects.add(object);
 		for(GameObject object1: gameObjects){
 			System.out.println(object1);
-		}
+		} 
 
 	}
 
@@ -445,6 +445,8 @@ public class World {
 	}
 
 	private Mazub mazub;
+	private Plant plant;
+	
 
 	/**
 	 * acceleration?
