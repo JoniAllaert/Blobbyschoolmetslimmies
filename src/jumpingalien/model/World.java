@@ -235,8 +235,8 @@ public class World {
 
 	private void setVisibleWindowHeight(int visibleWindowHeight) throws IllegalArgumentException{
 	//	System.out.println(mazub.getHeight());
-		if((visibleWindowHeight < (400 + mazub.getHeight())) || visibleWindowHeight > getyMax())
-		throw new IllegalArgumentException(); 
+	//	if((visibleWindowHeight < (400 + mazub.getHeight())) || visibleWindowHeight > getyMax())
+	//	throw new IllegalArgumentException(); 
 	//TODO er is iets fout met onze height en widht.
 		this.visibleWindowHeight = visibleWindowHeight;
 	}
